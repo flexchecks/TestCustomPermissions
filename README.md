@@ -49,7 +49,7 @@ TestCustomPermissions.User's Methods
 
 Example
 ------------
-
+```apex
     public with sharing class Controller {
 
         public Boolean getIsFirstCustomPermission() {
@@ -106,8 +106,6 @@ Example
 
             Test.stopTest();
             // -----------  Stop Test  -----------
-
         }
-
     }
-
+```
