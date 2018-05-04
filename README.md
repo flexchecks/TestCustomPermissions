@@ -50,7 +50,7 @@ TestCustomPermissions.User's Methods
 Example
 ------------
 ```apex
-    public with sharing class Controller {
+    public with sharing class ControllerWithCustomPermission {
 
         public Boolean getIsFirstCustomPermission() {
             return FeatureManagement.checkPermission('First_Custom_Permission');
@@ -96,7 +96,7 @@ Example
                         
                         // Test
                         {
-                            final Controller controller = new Controller();
+                            final ControllerWithCustomPermission controller = new ControllerWithCustomPermission();
                             System.assertEquals(isFirstCustomPermission, controller.getIsFirstCustomPermission());
                             System.assertEquals(isSecondCustomPermission, controller.getIsSecondCustomPermission());
                         }
