@@ -177,11 +177,7 @@ public with sharing class TestCustomPermissions {
 		public User assignCustomPermission(String developerName) {
 			if(this.getSetupAccessEntityIds().get(developerName) == null) {
 				Id customPermissionId = this.getCustomPermissionId(developerName);
-				new Debugger('CustomPermissionUser.assignCustomPermission(String developerName')
-					.add('developerName', developerName)
-					.add('Custom Permission ID for developerName', customPermissionId)
-					.add('Custom Permission IDs', this.c)
-					.assertNotEquals(null, customPermissionId);
+				System.assertNotEquals(null, customPermissionId, 'No CustomPermission found with DeveloperName: ' + developerName);
 				SetupEntityAccess setupEntityAccess = new SetupEntityAccess(
 					ParentId = this.getPermissionSetId(), 
 					SetupEntityId = customPermissionId
@@ -201,6 +197,13 @@ public with sharing class TestCustomPermissions {
 				Database.delete((Id) setupEntityAccessId);
 			}
 			return this;
+		}
+
+		public User set(String developerName, Boolean isAssigned) {
+			if(isAssigned == true) {
+				return this.assignCustomPermission(developerName);
+			}
+			return this.unassignCustomPermission(developerName);
 		}
 	}
 }
