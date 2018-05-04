@@ -63,7 +63,7 @@ public with sharing class TestCustomPermissions {
 		}
 	}
 
-	public with sharing class User implements Debuggable {
+	public with sharing class User {
 		final Schema.User u;
 		final Id p;
 		final Map<String, Id> s;
@@ -201,14 +201,6 @@ public with sharing class TestCustomPermissions {
 				Database.delete((Id) setupEntityAccessId);
 			}
 			return this;
-		}
-
-		// Debug
-		public Map<String, Object> debug() {
-			return new Map<String, Object> {
-				'User' => this.getUser(), 
-				'Assigned Custom Permissions' => this.getAssignedCustomPermissions()
-			};
 		}
 	}
 }
