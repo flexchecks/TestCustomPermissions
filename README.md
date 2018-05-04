@@ -41,3 +41,73 @@ TestCustomPermissions.User's Methods
 `TestCustomPermissions.User unassignCustomPermission(String developerName)`
 -  If assigned, unassigns **Custom Permission** whose **DeveloperName** equals `developerName` to `User`'s **Permission Set** with `Permission Set ID`
 -  Returns `this` for chaining
+
+`TestCustomPermissions.User set(String developerName, Boolean isAssigned)`
+-  Shorthand for **assignCustomPermission** and **unassignCustomPermission**
+-  If `isAssigned` equals `true`, returns `assignCustomPermission(developerName)`
+-  Else, returns `unassignCustomPermission(developerName)`
+
+Example
+------------
+
+    public with sharing class Controller {
+
+        public Boolean getIsFirstCustomPermission() {
+            return FeatureManagement.checkPermission('First_Custom_Permission');
+        }
+
+        public Boolean getIsSecondCustomPermission() {
+            return FeatureManagement.checkPermission('Second_Custom_Permission');
+        }
+
+    }
+
+
+    @IsTest
+    public with sharing class ControllerWithCustomPermission_Test {
+
+        @TestSetup
+        public static void testSetup() {
+            TestCustomPermissions.testSetup();
+        }
+
+        @IsTest
+        public static void testControllerWithCustomPermission() {
+            // Data
+            final TestCustomPermissions.User user = new TestCustomPermissions.User();
+            final Boolean[] options = new Boolean[] {
+                true, 
+                false
+            };
+
+            // -----------  Start Test  -----------
+            Test.startTest();
+
+            // ControllerWithCustomPermission
+            {
+                for(Boolean isFirstCustomPermission : options) {
+                    for(Boolean isSecondCustomPermission : options) {
+                        // Set Custom Permissions
+                        {
+                            user
+                                .set('First_Custom_Permission', isFirstCustomPermission)
+                                .set('Second_Custom_Permission', isSecondCustomPermission);
+                        }
+                        
+                        // Test
+                        {
+                            final Controller controller = new Controller();
+                            System.assertEquals(isFirstCustomPermission, controller.getIsFirstCustomPermission());
+                            System.assertEquals(isSecondCustomPermission, controller.getIsSecondCustomPermission());
+                        }
+                    }
+                }
+            }
+
+            Test.stopTest();
+            // -----------  Stop Test  -----------
+
+        }
+
+    }
+
