@@ -121,7 +121,7 @@ public with sharing class TestCustomPermissions {
                 ];
                 final Integer permissionSetAssignmentsSize = permissionSetAssignments.size();
                 System.assertEquals(1, permissionSetAssignments.size());
-                Sustem.assertEquals(this.getUser().LastName, permissionSetAssignments[0].PermissionSet.Name);
+                System.assertEquals(this.getUser().LastName, permissionSetAssignments[0].PermissionSet.Name);
                 this.p = permissionSetAssignments[0].PermissionSetId;
             }
 
